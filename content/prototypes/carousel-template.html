@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 40px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: linear-gradient(145deg, #0f0f1a 0%, #1a1a2e 100%);
+    border-radius: 32px;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 70px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(180, 120, 60, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(200, 160, 80, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .brand-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #c8a050, #e8c060, #c8a050);
+  }
+
+  .sigil {
+    position: absolute;
+    bottom: 60px;
+    right: 70px;
+    opacity: 0.06;
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-style: italic;
+    color: #c8a050;
+    line-height: 1;
+  }
+
+  .sigil-small {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    opacity: 0.08;
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-style: italic;
+    color: #c8a050;
+    line-height: 1;
+  }
+
+  .label {
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a050;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 58px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    max-width: 85%;
+  }
+
+  .subtitle {
+    font-size: 22px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    line-height: 1.5;
+    max-width: 75%;
+  }
+
+  .body-text {
+    font-size: 26px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 85%;
+  }
+
+  .body-text strong {
+    color: #e8c060;
+    font-weight: 600;
+  }
+
+  .quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 34px;
+    color: #c8a050;
+    line-height: 1.5;
+    max-width: 80%;
+    padding: 30px 0 20px 40px;
+    border-left: 3px solid rgba(200, 160, 80, 0.3);
+    margin: 20px 0;
+  }
+
+  .quote-attribution {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 16px;
+    color: rgba(200, 160, 80, 0.5);
+    letter-spacing: 1px;
+    padding-left: 40px;
+    margin-bottom: 30px;
+  }
+
+  .step {
+    margin-bottom: 22px;
+  }
+
+  .step-number {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0a0a0f;
+    background: #c8a050;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .step-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    font-size: 22px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    max-width: 80%;
+    line-height: 1.5;
+  }
+
+  .cta-box {
+    display: inline-block;
+    border: 2px solid #c8a050;
+    padding: 18px 40px;
+    border-radius: 8px;
+    font-size: 22px;
+    color: #c8a050;
+    font-weight: 600;
+    margin-top: 30px;
+    letter-spacing: 1px;
+  }
+
+  .small-note {
+    font-size: 16px;
+    color: rgba(255,255,255,0.25);
+    margin-top: 40px;
+  }
+
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  .bullet-list li {
+    font-size: 24px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+    padding: 10px 0;
+    padding-left: 36px;
+    position: relative;
+    line-height: 1.5;
+    max-width: 80%;
+  }
+
+  .bullet-list li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: #c8a050;
+    font-size: 14px;
+    top: 15px;
+  }
+
+  .bullet-list li strong {
+    color: #e8c060;
+    font-weight: 600;
+  }
+
+  .page-number {
+    position: absolute;
+    bottom: 60px;
+    left: 70px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 2px;
+  }
+
+  .cover-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .visual-zone {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+  }
+
+  .visual-card {
+    background: rgba(200, 160, 80, 0.04);
+    border: 1px solid rgba(200, 160, 80, 0.1);
+    border-radius: 16px;
+    padding: 30px;
+    flex: 1;
+  }
+
+  .visual-card .icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+
+  .visual-card .vlabel {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(200, 160, 80, 0.6);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .visual-card .vtitle {
+    font-size: 22px;
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .visual-card .vdesc {
+    font-size: 17px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200,160,80,0.2), transparent);
+    margin: 30px 0;
+    width: 60%;
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide">
+  <div class="brand-bar"></div>
+  <div class="cover-center">
+    <div class="label">AI Strategy · Application</div>
+    <h1 style="font-size: 52px;">Win Without Fighting:<br>Sun Zi's Art of<br>AI Strategy</h1>
+    <div class="subtitle" style="max-width: 90%;">Ancient Wisdom Meets Modern Automation —<br>A Strategic Framework for 2026</div>
+    <div style="margin-top: 50px;">
+      <span style="font-size: 16px; color: rgba(255,255,255,0.3); letter-spacing: 2px;">by Josh Lai · AI-Augmented Strategy</span>
+    </div>
+  </div>
+  <div class="sigil">应用</div>
+  <div class="page-number">01 / 07</div>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide">
+  <div class="brand-bar"></div>
+  <div class="label" style="margin-top: 40px;">The Gap</div>
+  <h1 style="font-size: 48px;">Everyone has an AI strategy. <span style="color: #e8c060;">Almost nobody has an AI deployment.</span></h1>
+  <div class="body-text" style="margin-top: 30px;">
+    Boardrooms are full of beautifully crafted AI vision decks. But six months later, nothing has changed.<br><br>
+    The gap isn't <strong>knowing what AI can do</strong> — it's <strong>knowing how to make it work for you</strong> this week.
+  </div>
+  <div class="visual-zone" style="margin-top: 40px;">
+    <div class="visual-card">
+      <div class="icon">📋</div>
+      <div class="vlabel">THEORY</div>
+      <div class="vtitle">"AI will transform<br>our industry"</div>
+      <div class="vdesc">Vague. No timeline.<br>No owner. No output.</div>
+    </div>
+    <div class="visual-card" style="border-color: rgba(200,160,80,0.3);">
+      <div class="icon">⚡</div>
+      <div class="vlabel">APPLICATION</div>
+      <div class="vtitle">"This agent saves<br>me 10hr/week"</div>
+      <div class="vdesc">Specific. Measured.<br>Deployed. Iterated.</div>
+    </div>
+  </div>
+  <div class="sigil-small">应用</div>
+  <div class="page-number">02 / 07</div>
+</div>
+
+<!-- SLIDE 3: SUN TZU -->
+<div class="slide">
+  <div class="brand-bar"></div>
+  <div class="label" style="margin-top: 40px;">Ancient Wisdom</div>
+  <div class="quote">
+    "Tactics without strategy is the noise before defeat.<br>Strategy without tactics is the slowest route to victory."
+  </div>
+  <div class="quote-attribution">— Sun Tzu, The Art of War (adapted)</div>
+  <div class="body-text">
+    Sun Tzu understood that <strong>vision without execution</strong> is empty. The same applies to AI.<br><br>
+    The winners aren't those with the best AI strategy decks.<br>They're the ones who shipped something real <strong>this week.</strong>
+  </div>
+  <div class="sigil">应用</div>
+  <div class="page-number">03 / 07</div>
+</div>
+
+<!-- SLIDE 4: THREE LENSES -->
+<div class="slide">
+  <div class="brand-bar"></div>
+  <div class="label" style="margin-top: 40px;">The Framework</div>
+  <h1 style="font-size: 42px;">Zoom to Application:<br>Three Lenses</h1>
+
+  <div class="step" style="margin-top: 30px;">
+    <div class="step-number">LENS 01</div>
+    <div class="step-title">What can I ship this week?</div>
+    <div class="step-desc">Not "what's the long-term AI roadmap" — but one agent, one workflow, one automation that delivers visible value in 7 days.</div>
+  </div>
+  <div class="step">
+    <div class="step-number">LENS 02</div>
+    <div class="step-title">Where is my bottleneck?</div>
+    <div class="step-desc">80% of AI's value comes from automating the one task that eats your time. Find it. Fix it. Move on.</div>
+  </div>
+  <div class="step">
+    <div class="step-number">LENS 03</div>
+    <div class="step-title">Does this compound?</div>
+    <div class="step-desc">One good automation should unlock the next. Each deployment makes the next one faster.</div>
+  </div>
+  <div class="sigil-small">应用</div>
+  <div class="page-number">04 / 07</div>
+</div>
+
+<!-- SLIDE 5: REAL EXAMPLE -->
+<div class="slide">
+  <div class="brand-bar"></div>
+  <div class="label" style="margin-top: 40px;">In Practice</div>
+  <h1 style="font-size: 44px;">Theory → Application<br>in One Week</h1>
+  <div class="body-text" style="margin-top: 20px;">
+    A client came with a "content strategy problem." We zoomed to application:
+  </div>
+  <div class="visual-zone" style="margin-top: 25px;">
+    <div class="visual-card">
+      <div class="vlabel">BEFORE</div>
+      <div class="vtitle">Strategy paralysis</div>
+      <div class="vdesc">Hours planning content calendars. Zero posts published.</div>
+    </div>
+    <div class="visual-card" style="border-color: rgba(200,160,80,0.3);">
+      <div class="vlabel">AFTER (1 WEEK)</div>
+      <div class="vtitle">AI content engine live</div>
+      <div class="vdesc">One recording → auto-generated posts across LinkedIn, YouTube, email. Publishing weekly.</div>
+    </div>
+  </div>
+  <div class="body-text" style="margin-top: 20px;">
+    The gap wasn't strategy. It was <strong>deployment.</strong>
+  </div>
+  <div class="sigil-small">应用</div>
+  <div class="page-number">05 / 07</div>
+</div>
+
+<!-- SLIDE 6: ACTION -->
+<div class="slide">
+  <div class="brand-bar"></div>
+  <div class="label" style="margin-top: 40px;">Your Move</div>
+  <h1 style="font-size: 42px;">Zoom to Application:<br>This Week's Playbook</h1>
+
+  <div class="step" style="margin-top: 30px;">
+    <div class="step-number">MONDAY</div>
+    <div class="step-title">Pick one bottleneck</div>
+    <div class="step-desc">What's the most repetitive task you did last week? That's your target.</div>
+  </div>
+  <div class="step">
+    <div class="step-number">WEDNESDAY</div>
+    <div class="step-title">Deploy one AI agent</div>
+    <div class="step-desc">Doesn't need to be perfect. Ship something that works 80% of the time.</div>
+  </div>
+  <div class="step">
+    <div class="step-number">FRIDAY</div>
+    <div class="step-title">Measure the time saved</div>
+    <div class="step-desc">If it saved 2+ hours, keep it. If not, iterate or kill it. Move fast.</div>
+  </div>
+  <div class="sigil-small">应用</div>
+  <div class="page-number">06 / 07</div>
+</div>
+
+<!-- SLIDE 7: CTA -->
+<div class="slide">
+  <div class="brand-bar"></div>
+  <div class="cover-center">
+    <div class="label">Josh Lai · AI-Augmented Strategy</div>
+    <h1 style="font-size: 52px;">Stop Strategizing.<br>Start Deploying.</h1>
+    <div class="body-text" style="margin-top: 20px;">
+      You already know AI matters.<br>Let me show you exactly how to make it work —<br>for your business, this week.
+    </div>
+    <div class="cta-box">→ Book a Strategy Call</div>
+    <div style="margin-top: 50px;">
+      <span style="font-size: 14px; color: rgba(255,255,255,0.2); letter-spacing: 1px;">
+        The AI strategist who quotes Sun Tzu · From theory to application
+      </span>
+    </div>
+  </div>
+  <div class="sigil">应用</div>
+  <div class="page-number">07 / 07</div>
+</div>
+
+</body>
+</html>
