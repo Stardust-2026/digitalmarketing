@@ -51,7 +51,7 @@ try:
     content = data["choices"][0]["message"]["content"]
     
     # Save to file
-    out_dir = "/home/josh/Development/Projects/digitalmarketing/content"
+    out_dir = "/home/josh/Development/Projects/digitalmarketing/review/pending"
     os.makedirs(out_dir, exist_ok=True)
     from datetime import datetime
     fname = f"{out_dir}/content_{datetime.now().strftime('%Y%m%d_%H%M')}.md"

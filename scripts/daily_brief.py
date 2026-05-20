@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 today = datetime.now().strftime("%Y%m%d")
 yesterday = (datetime.now() - timedelta(1)).strftime("%Y%m%d")
 
-content_dir = "/home/josh/Development/Projects/digitalmarketing/content"
-intel_dir = "/home/josh/Development/Projects/digitalmarketing/intel"
+content_dir = "/home/josh/Development/Projects/digitalmarketing/review/pending"
+intel_dir = "/home/josh/Development/Projects/digitalmarketing/review/intel"
 brief_dir = "/home/josh/Development/Projects/digitalmarketing/briefs"
 os.makedirs(brief_dir, exist_ok=True)
 
