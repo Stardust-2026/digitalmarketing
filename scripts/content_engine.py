@@ -65,8 +65,52 @@ try:
     linkedin_start = content.find("===LINKEDIN===")
     linkedin_end = content.find("===YOUTUBE===")
     if linkedin_start >= 0 and linkedin_end >= 0:
+        linkedin_text = content[linkedin_start+13:linkedin_end].strip()
         print("\n📱 LINKEDIN POST:")
-        print(content[linkedin_start+13:linkedin_end].strip())
+        print(linkedin_text)
+        
+        # Update Notion coordination board with the new post
+        try:
+            notion_key = os.environ.get("NOTION_API_KEY", "")
+            if notion_key:
+                board_id = "366da819-df10-81dd-b0a7-f00857365477"
+                notion_headers = {
+                    "Authorization": f"Bearer {notion_key}",
+                    "Notion-Version": "2022-06-28",
+                    "Content-Type": "application/json"
+                }
+                # Read current board content
+                read_req = urllib.request.Request(
+                    f"https://api.notion.com/v1/pages/{board_id}/markdown",
+                    headers=notion_headers
+                )
+                read_resp = json.loads(urllib.request.urlopen(read_req, timeout=10).read())
+                current_md = read_resp.get("markdown", "")
+                
+                # Replace the pending section with new content
+                from datetime import datetime
+                now = datetime.now().strftime("%Y-%m-%d %H:%M")
+                new_section = f"""\n## ⏳ Pending Approval\n\n### W1P2 — {now} — \"{TOPIC}\"\n\n**LinkedIn post draft:**\n\n{linkedin_text}\n\n**To approve:** Send `approve W1P2` on Telegram\n**To edit:** Edit the text above and send `check board` on Telegram\n---"""
+                
+                # Find and replace the pending section
+                if "## ⏳ Pending Approval" in current_md:
+                    parts = current_md.split("## ⏳ Pending Approval")
+                    rest = parts[1].split("## ✅ Recently Posted") if "## ✅ Recently Posted" in parts[1] else [parts[1], ""]
+                    updated = parts[0] + "## ⏳ Pending Approval" + new_section + "\n\n## ✅ Recently Posted" + rest[1]
+                else:
+                    updated = current_md + "\n\n" + new_section
+                
+                # Patch the page
+                patch_data = json.dumps({"type": "replace_content", "replace_content": {"new_str": updated}})
+                patch_req = urllib.request.Request(
+                    f"https://api.notion.com/v1/pages/{board_id}/markdown",
+                    data=patch_data.encode(), headers=notion_headers, method="PATCH"
+                )
+                urllib.request.urlopen(patch_req, timeout=10)
+                print("📋 Coordination board updated on Notion")
+        except Exception as e:
+            print(f"⚠️ Board update skipped: {e}")
+    else:
+        print(content[:200])
 except Exception as e:
     print(f"❌ Error: {e}")
-    sys.exit(1)
